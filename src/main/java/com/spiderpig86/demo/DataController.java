@@ -20,7 +20,7 @@ public class DataController {
     }
 
     @PostMapping("/addstring")
-    private List<String> addWordEndpoint(@RequestBody String word) {
+    private List<String> addWordEndpoint(@RequestBody String word) throws InterruptedException {
         return dataFacade.addWord(word);
     }
 

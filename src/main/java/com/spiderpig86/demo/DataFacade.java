@@ -4,17 +4,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
 @Scope("singleton")
 public class DataFacade {
 
-    private List<String> words;
-    private int counter;
+    private volatile List<String> words;
+    private volatile int counter;
 
     public DataFacade() {
-        this.words = new ArrayList<>();
+        this.words = Collections.synchronizedList(new ArrayList<>());
         this.counter = 0;
     }
 
@@ -22,17 +23,17 @@ public class DataFacade {
         return this.words;
     }
 
-    public List<String> addWord(final String word) throws InterruptedException {
-        this.words = new ArrayList<>();
+    public synchronized List<String> addWord(final String word) throws InterruptedException {
+        this.words = Collections.synchronizedList(new ArrayList<>());
         this.words.add(word);
 
-        // Do some work and return list, we should only return one word...
+        // Do some work and return list, we should only return one word (the word originally requested)...
         Thread.sleep(1000);
 
         return this.words;
     }
 
-    public int increment() {
+    public synchronized int increment() {
         return ++this.counter;
     }
 
