@@ -22,8 +22,13 @@ public class DataFacade {
         return this.words;
     }
 
-    public List<String> addWord(final String word) {
+    public List<String> addWord(final String word) throws InterruptedException {
+        this.words = new ArrayList<>();
         this.words.add(word);
+
+        // Do some work and return list, we should only return one word...
+        Thread.sleep(1000);
+
         return this.words;
     }
 
