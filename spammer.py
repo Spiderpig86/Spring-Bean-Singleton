@@ -34,7 +34,7 @@ THREAD_COUNT = 4
 threads = []
 try:
     for i in range(THREAD_COUNT):
-        t = Thread(target=add_string, args=(f'Thread {i}', 0.01))
+        t = Thread(target=increment_number, args=(f'Thread {i}', 0.01))
         t.start()
         threads.append(t)
 except:
